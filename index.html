@@ -1,142 +1,26 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Web Nghe Nhạc Free</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #111);
-      color: #fff;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    h1 {
-      margin: 20px 0;
-    }
-    .player {
-      max-width: 400px;
-      margin: auto;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    }
-    .controls button {
-      background: #444;
-      border: none;
-      color: #fff;
-      padding: 10px 15px;
-      margin: 5px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .controls button:hover {
-      background: #666;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 15px;
-    }
-    li {
-      padding: 5px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    li:hover {
-      color: #1db954;
-    }
-    .active {
-      color: #1db954;
-      font-weight: bold;
-    }
-  </style>
+  <title>C�ng Five</title>
 </head>
 <body>
-  <h1>🎶 Web Nghe Nhạc</h1>
-  <div class="player">
-    <audio id="audio" controls></audio>
-
-    <div class="controls">
-      <button onclick="prevSong()">⏮ Trước</button>
-      <button onclick="togglePlay()">▶️/⏸</button>
-      <button onclick="nextSong()">⏭ Tiếp</button>
-      <button onclick="toggleShuffle()">🔀 Ngẫu nhiên</button>
-    </div>
-
-    <h3>Danh sách nhạc</h3>
-    <ul id="playlist"></ul>
-  </div>
+  <h1>Danh s�ch nh?c C�ng Five</h1>
+  <div id="playlist"></div>
 
   <script>
-    // Danh sách nhạc (bạn đổi link mp3 ở đây)
-    const songs = [
-      { title: "Bài hát 1", src: "song1.mp3" },
-      { title: "Bài hát 2", src: "song2.mp3" },
-      { title: "Bài hát 3", src: "song3.mp3" }
-    ];
+    // Ch? s?a m?ng n�y khi th�m file m?i
+    const files = ["bai1.mp3", "bai2.mp3", "bai3.mp3"]; 
+    const container = document.getElementById("playlist");
 
-    let currentSong = 0;
-    let isShuffle = false;
-    const audio = document.getElementById("audio");
-    const playlist = document.getElementById("playlist");
-
-    // Tạo danh sách nhạc
-    songs.forEach((song, index) => {
-      const li = document.createElement("li");
-      li.textContent = song.title;
-      li.onclick = () => loadSong(index);
-      playlist.appendChild(li);
+    files.forEach(file => {
+      const div = document.createElement("div");
+      div.innerHTML = `<p>${file}</p>
+        <audio controls>
+          <source src="${file}" type="audio/mpeg">
+        </audio>`;
+      container.appendChild(div);
     });
-
-    function loadSong(index) {
-      currentSong = index;
-      audio.src = songs[index].src;
-      audio.play();
-      updateActiveSong();
-    }
-
-    function updateActiveSong() {
-      const items = playlist.querySelectorAll("li");
-      items.forEach((item, i) => {
-        item.classList.toggle("active", i === currentSong);
-      });
-    }
-
-    function nextSong() {
-      if (isShuffle) {
-        currentSong = Math.floor(Math.random() * songs.length);
-      } else {
-        currentSong = (currentSong + 1) % songs.length;
-      }
-      loadSong(currentSong);
-    }
-
-    function prevSong() {
-      currentSong = (currentSong - 1 + songs.length) % songs.length;
-      loadSong(currentSong);
-    }
-
-    function togglePlay() {
-      if (audio.paused) {
-        audio.play();
-      } else {
-        audio.pause();
-      }
-    }
-
-    function toggleShuffle() {
-      isShuffle = !isShuffle;
-      alert("Chế độ ngẫu nhiên: " + (isShuffle ? "BẬT" : "TẮT"));
-    }
-
-    audio.addEventListener("ended", nextSong);
-
-    // Tải bài đầu tiên
-    loadSong(currentSong);
   </script>
 </body>
 </html>
